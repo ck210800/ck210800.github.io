@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Task Randomizer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    .task-box {
+      font-size: 1.5rem;
+      margin: 2rem 0;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Daily Task Randomizer</h1>
+  <div class="task-box" id="taskDisplay">Click "Start" to get your first task!</div>
+  <button onclick="startTasks()">Start</button>
+  <button onclick="nextTask()">Done ✅</button>
+  <button onclick="shuffleTasks()">Shuffle Again 🔁</button>
+
+  <script>
+    let tasks = [
+      "Read a few pages of a book",
+      "Code in Python for practice",
+      "Make progress on the sustainability course",
+      "Solve some probability questions"
+    ];
+
+    let currentTasks = [];
+    let taskIndex = 0;
+
+    function shuffleTasks() {
+      currentTasks = [...tasks];
+      for (let i = currentTasks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentTasks[i], currentTasks[j]] = [currentTasks[j], currentTasks[i]];
+      }
+      taskIndex = 0;
+      document.getElementById("taskDisplay").textContent = "Shuffled! Click 'Start' to begin.";
+    }
+
+    function startTasks() {
+      if (currentTasks.length === 0) shuffleTasks();
+      taskIndex = 0;
+      showTask();
+    }
+
+    function showTask() {
+      if (taskIndex < currentTasks.length) {
+        document.getElementById("taskDisplay").textContent = `Task ${taskIndex + 1}: ${currentTasks[taskIndex]}`;
+      } else {
+        document.getElementById("taskDisplay").textContent = "🎉 All tasks completed! Well done!";
+      }
+    }
+
+    function nextTask() {
+      if (taskIndex < currentTasks.length) {
+        taskIndex++;
+        showTask();
+      }
+    }
+  </script>
+</body>
+</html>
